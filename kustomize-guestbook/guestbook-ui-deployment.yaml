@@ -13,8 +13,13 @@ spec:
       labels:
         app: guestbook-ui
     spec:
+      serviceAccountName: guestbook
+      automountServiceAccountToken: true
       containers:
       - image: gcr.io/heptio-images/ks-guestbook-demo:0.1
         name: guestbook-ui
         ports:
         - containerPort: 80
+        envFrom:
+          - secretRef:
+              name: guestbook-secrets

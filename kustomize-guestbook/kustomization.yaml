@@ -3,5 +3,18 @@ namePrefix: kustomize-
 resources:
 - guestbook-ui-deployment.yaml
 - guestbook-ui-svc.yaml
+- sa.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
+secretGenerator:
+- name: guestbook-secrets
+  literals:
+  - FOO=<value>
+  - KIKKELIS=<kikkelis>
+  - SECRET_VERSION="2"
+  type: Opaque
+  options:
+    annotations:
+      avp.kubernetes.io/path: "secret/data/foo"
+      avp.kubernetes.io/secret-version: "2"
